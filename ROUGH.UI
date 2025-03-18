@@ -1,1 +1,499 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Explorer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!--<link href="https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap" rel="stylesheet">-->
+
+  <style>
+    
+    /* Default Light Theme */
+    :root {
+      --background-color: #ffffff;
+      --text-color: #000000;
+      --navbar-bg: #ffffff;
+      --navbar-link-color: #000000;
+      --hero-bg:rgb(56, 150, 162);
+      --hero-text-color: #fff;
+      --button-bg: #ff6600;
+      --button-text-color: #fff;
+      --card-bg: #fafafa;
+      --footer-bg: #333;
+      --footer-text-color: #fff;
+      --message-user-bg: #ffcc80;
+      --message-bot-bg: #e0e0e0;
+    }
+
+    /* Dark Theme */
+    [data-theme="dark"] {
+      --background-color: #121212;
+      --text-color: #ffffff;
+      --navbar-bg: #1f1f1f;
+      --navbar-link-color: #fff;
+      --hero-bg: #333;
+      --hero-text-color: #fff;
+      --button-bg: #ff6600;
+      --button-text-color: #fff;
+      --card-bg: #2b2b2b;
+      --footer-bg: #333;
+      --footer-text-color: #fff;
+      --message-user-bg: #616161;
+      --message-bot-bg: #3a3a3a;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif; 
+      background: var(--background-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    } <!--Roboto-->
+
+    /* Navigation Bar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--navbar-bg);
+      padding: 1rem;
+      color: var(--navbar-link-color);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #ff6600;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links li {
+      margin: 0;
+    }
+    .nav-links a {
+      color: var(--navbar-link-color);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease; text-shadow 0.3s ease;
+      text-shadow: 0 0 10px rgba(255, 102, 0, 0.9);
+    }
+    .nav-links a:hover {
+      color: #ff6600;
+      text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem;
+      background: url('campus.jpg') no-repeat center/cover;
+      background-color: var(--hero-bg);
+      color: var(--hero-text-color);
+      box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600;
+    }
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px rgba(255, 102, 0, 0.7);
+    }
+    .hero button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      background: var(--button-bg);
+      color: var(--button-text-color);
+      cursor: pointer;
+      border-radius: 25px;
+      transition: background 0.3s ease;box-shadow 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 102, 0, 0.7); /* Neon glow */
+    }
+    .hero button:hover {
+      background: #e55d00;
+      box-shadow: 0 0 20px rgba(255, 102, 0, 0.9); /* Neon glow */
+    }
+      .slideshow-container {
+        position: relative;
+        max-width: 100%;
+        height: 600px;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+    
+      .mySlides {
+        display: none;
+      }
+    
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+    
+      /* Optional: Text & button style */
+      .hero h1,
+      .hero p,
+      .hero button {
+        z-index: 1; /* Make sure text and button appear on top */
+      }
+    
+
+    /* Chat Section */
+    .chat-section {
+      background: var(--background-color);
+      margin: 2rem auto;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .chat-window {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .message {
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+    }
+    .message.bot {
+      background: var(--message-bot-bg);
+      text-align: left;
+      box-shadow: 0 0 5px rgba(0, 255, 255, 0.7); /* Neon text glow */
+    }
+    .message.user {
+      background: var(--message-user-bg);
+      text-align: right;
+      box-shadow: 0 0 5px rgba(255, 0, 255, 0.7);
+    }
+    .chat-input {
+      display: flex;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .chat-input button {
+      padding: 0.75rem 1.5rem;
+      background: var(--button-bg);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-left: 0.5rem;
+      transition: background 0.3s ease;
+    }
+    .chat-input button:hover {
+      background: #e55d00;
+    }
+    /* Theme Toggle Button */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--button-bg);
+    color: var(--button-text-color);
+    padding: 0.75rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 102, 0, 0.7); /* Neon glow */
+  }
+  .theme-toggle:hover {
+    background: #e55d00;
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.9); /* Neon glow */
+  }
+
+    /* Buddy Finder Section */
+    .buddy-finder {
+      background: var(--background-color);
+      margin: 2rem auto;
+      padding: 2rem;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .buddy-finder form {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      justify-content: center;
+    }
+    .buddy-finder label {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .buddy-finder input,
+    .buddy-finder select {
+      padding: 0.75rem;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 250px;
+    }
+    .buddy-finder button {
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      background: var(--button-bg);
+      color: var(--button-text-color);
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    .buddy-finder button:hover {
+      background: #e55d00;
+    }
+
+    .buddy-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .buddy-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      flex: 1 1 200px;
+      min-width: 220px;
+      text-align: center;
+    }
+
+    .buddy-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .buddy-card p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .buddy-card button {
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .buddy-card button:hover {
+      background: #218838;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--footer-bg);
+      color: var(--footer-text-color);
+      margin-top: 2rem;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--button-bg);
+      color: var(--button-text-color);
+      padding: 0.75rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      transition: background 0.3s ease;
+    }
+    .theme-toggle:hover {
+      background: #e55d00;
+    }
+    
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">Campus Explorer</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#guide">Tourist Guide</a></li>
+      <li><a href="finder.html">Buddy Finder</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#profile">Profile</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+<header id="home" class="hero">
+  <div class="slideshow-container">
+    <div class="mySlides fade">
+      <img src="bodh-gaya.jpg" style="width:100%"  alt="Campus Image 1">
+    </div>
+    <div class="mySlides fade">
+      <img src="OIP1.jpg" style="width:100%" alt="Campus Image 2">
+    </div>
+    <div class="mySlides fade">
+      <img src="85758298.webp" style="width:100%" alt="Campus Image 3">
+    </div>
+    {% comment %} <div class="mySlides fade">
+      <img src="OIP.jpg" style="width:100%" alt="Campus Image 4">
+    </div> {% endcomment %}
+  </div>
+  <h1>Welcome to Campus Explorer</h1>
+  <p>Discover your campus with our AI Tourist Guide and find your adventure buddy!</p>
+  <button onclick="document.getElementById('guide').scrollIntoView();">Start Exploring</button>
+</header>
+
+<!-- Additional Styles for the Slideshow -->
+<style>
+  .slideshow-container {
+    position: relative;
+    max-width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .mySlides {
+    display: none;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  /* Optional: Text & button style */
+  .hero h1,
+  .hero p,
+  .hero button {
+    z-index: 1; /* Make sure text and button appear on top */
+  }
+</style>
+
+<!-- JavaScript to handle Slideshow -->
+<script>
+  let slideIndex = 0;
+
+  function showSlides() {
+    let slides = document.getElementsByClassName("mySlides");
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    slides[slideIndex - 1].style.display = "block";  
+    setTimeout(showSlides, 3000); // Change image every 3 seconds
+  }
+
+  showSlides(); // Start the slideshow when the page loads
+</script>
+
+  <!-- AI Tourist Guide Chatbot Section -->
+  <section id="guide" class="chat-section">
+    <h2>AI Tourist Guide</h2>
+    <div class="chat-window">
+      <div class="message bot">Hello! I’m your AI Guide. Ask me anything about the campus.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your question..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </section>
+
+  <!-- Buddy Finder Module -->
+  <section id="buddy" class="buddy-finder">
+    <form id="buddySearch">
+      <label for="interest">Interest:</label>
+      <select id="interest" name="interest">
+        <option value="campusTour">Campus Tour</option>
+        <option value="foodWalk">Food Walk</option>
+        <option value="studyBuddy">Study Buddy</option>
+        <option value="sports">Sports Facilities</option>
+      </select>
+      <label for="time">Time:</label>
+      <input type="time" id="time" name="time" />
+      <button type="submit"><a href ="finder.html">Find Buddies</a></button>
+    </form>
+    <div class="buddy-list">
+      <div class="buddy-card">
+        <h3>Campus Tour Group</h3>
+        <p>Meeting at Main Gate, 09:00 PM</p>
+        <p>Participants: 1/5</p>
+        <button><a href="finder.html">Join</a></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Campus Explorer. All Rights Reserved &copy; </p>
+  </footer>
+
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+  <script>
+    // Theme Toggle Function
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute("data-theme");
+      if (currentTheme === "dark") {
+        body.removeAttribute("data-theme");
+      } else {
+        body.setAttribute("data-theme", "dark");
+      }
+    }
+
+    // Example JavaScript for sending a message in the chat
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const chatWindow = document.querySelector('.chat-window');
+      if(input.value.trim() !== "") {
+        const userMsg = document.createElement('div');
+        userMsg.className = "message user";
+        userMsg.textContent = input.value;
+        chatWindow.appendChild(userMsg);
+        input.value = "";
+        const botMsg = document.createElement('div');
+        botMsg.className = "message bot";
+        botMsg.textContent = "Let me check that for you...";
+        chatWindow.appendChild(botMsg);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>
