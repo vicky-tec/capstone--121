@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campus Explorer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ga+Maamli&family=Protest+Revolution&family=Rubik+Glitch+Pop&family=Rubik+Wet+Paint&display=swap');
     /* Styles moved here to keep everything in one file */
     
     /* Default Light Theme */
@@ -230,6 +231,9 @@
     background: #e55d00;
     box-shadow: 0 0 20px rgba(255, 102, 0, 0.9); /* Neon glow */
   }
+  .theme-toggle.rotate {
+    transform: rotate(360deg);
+  }
 
     /* Buddy Finder Section */
     .buddy-finder {
@@ -379,17 +383,35 @@
     html {
       scroll-behavior: smooth;
     }
+    h1{
+      font-family:"Protest Revolution", sans-serif;
+
+    }
+    .logo{
+      width: 85px;
+      cursor: pointer;  
+  }
+  .navbar {
+    display: flex;
+    justify-content: center;  /* center horizontally */
+    align-items: center;      /* center vertically */
+    padding: 10px 20px;
+  }
     /* CSS styles trimmed for brevity */
   </style>
 </head>
 <body>
   <!-- Navigation Bar -->
   <nav class="navbar">
-    <div class="logo">Campus Explorer</div>
+    <div class="logo">
+      <a href="#home">
+        <img src="TRAVALLY .png" alt="Travally Logo" style="height: 30px;">
+      </a>
+    </div>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#guide">Tourist Guide</a></li>
-      <li><a href="#buddy">Buddy Finder</a></li>
+      <li><a href="finder.html">Buddy Finder</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#profile">Profile</a></li>
     </ul>
@@ -402,8 +424,8 @@
       <video src="video.mp4"></video>
     </div>
    
-    <h1 style="color: Purple;">Welcome to Campus Explorer</h1>
-    <p style="color: Purple;">Discover your campus with our AI Tourist Guide and find your adventure buddy!</p>
+    <h1 style="color: purple;">Welcome to Travally</h1>
+    <p style="color: purple;">Discover your Place with our AI Tourist Guide and find your adventure buddy!</p>
     <button onclick="document.getElementById('guide').scrollIntoView();">Start Exploring</button>
   </header>
 
@@ -435,7 +457,7 @@
     </form>
     <div class="buddy-list">
       <div class="buddy-card">
-        <h3>Campus Tour Group</h3>
+        <h3>Tour Group</h3>
         <p>Meeting at Main Gate, 09:00 PM</p>
         <p>Participants: 1/5</p>
         <button>Join</button>
@@ -453,10 +475,23 @@
 
   <script>
     // Theme toggle logic
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
-    }
+    const themeToggleBtn = document.getElementById("themeToggle");
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+  document.documentElement.setAttribute("data-theme", newTheme);
+
+  // Add rotation animation
+  themeToggleBtn.classList.add("rotate");
+
+  // Change icon after rotation
+  setTimeout(() => {
+    themeToggleBtn.textContent = newTheme === "dark" ? "🌙" : "☀️";
+    themeToggleBtn.classList.remove("rotate");
+  }, 500);
+}
 
     // AI Chat logic (basic mock-up)
     function sendMessage() {
