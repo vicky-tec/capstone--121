@@ -1,0 +1,57 @@
+-- Create the database
+CREATE DATABASE login_system;
+
+-- Use the database
+USE login_system;
+
+-- Create a table for login users
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    mobile VARCHAR(15) NOT NULL
+);
+
+
+
+
+
+
+
+
+
+
+
+<?php
+$host = "localhost";
+$db = "login_system";
+$user = "root";        // change if your MySQL username is different
+$pass = "";            // change if your MySQL password is set
+
+// Create connection
+$conn = new mysqli($host, $user, $pass, $db);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get POST data
+$username = $_POST['username'];
+$email = $_POST['email'];
+$mobile = $_POST['mobile'];
+
+// Insert into database
+$sql = "INSERT INTO users (username, email, mobile) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sss", $username, $email, $mobile);
+
+if ($stmt->execute()) {
+    echo "Login successful!";
+} else {
+    echo "Error: " . $stmt->error;
+}
+
+$stmt->close();
+$conn->close();
+?>
