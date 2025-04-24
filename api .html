@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Example</title>
+</head>
+<body>
+    <h1>Users API</h1>
+    
+    <h2>Get All Users</h2>
+    <button onclick="getUsers()">Get Users</button>
+    <pre id="usersList"></pre>
+    
+    <h2>Add a New User</h2>
+    <form id="addUserForm">
+        <input type="text" id="userName" placeholder="Enter user name" required />
+        <button type="submit">Add User</button>
+    </form>
+
+    <script>
+        // Fetch and display all users
+        function getUsers() {
+            fetch('http://127.0.0.1:5000/api/users')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('usersList').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Add a new user
+        document.getElementById('addUserForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const userName = document.getElementById('userName').value;
+
+            fetch('http://127.0.0.1:5000/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: Date.now(), name: userName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('New user added:', data);
+                getUsers(); // Refresh the user list
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
